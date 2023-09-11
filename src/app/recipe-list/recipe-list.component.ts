@@ -11,8 +11,8 @@ export class RecipeListComponent implements OnInit {
 
   recipes = [
     {id: 1, name: 'Biryani', description: 'rice,chicken,spices,coriander'},
-    {id: 1, name: 'Pizza', description: 'bread,cheese,tomato sauce,black olives'},
-    {id: 1, name: 'General Tao Chicken', description: 'chicken,sweet sauce'}
+    {id: 2, name: 'Pizza', description: 'bread,cheese,tomato sauce,black olives'},
+    {id: 3, name: 'General Tao Chicken', description: 'chicken,sweet sauce'}
   ];
 
   selectedRecipe?: any;
@@ -25,7 +25,7 @@ export class RecipeListComponent implements OnInit {
   }
 
   onDelete(recipe:any): void{
-    this.selectedRecipe = recipe;
+    this.recipes = this.recipes.filter(obj => obj.id != recipe.id);
   }
 
 }
