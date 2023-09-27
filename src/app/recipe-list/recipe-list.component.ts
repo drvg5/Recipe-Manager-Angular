@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RecipeService } from '../services/recipe.service';
 
 @Component({
   selector: 'app-recipe-list',
@@ -7,17 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RecipeListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private recipeService: RecipeService) { }
 
-  recipes = [
-    {id: 1, name: 'Biryani', description: 'rice,chicken,spices,coriander'},
-    {id: 2, name: 'Pizza', description: 'bread,cheese,tomato sauce,black olives'},
-    {id: 3, name: 'General Tao Chicken', description: 'chicken,sweet sauce'}
-  ];
+  recipes: any;
 
   selectedRecipe?: any;
 
   ngOnInit(): void {
+    this.recipeService.getRecipeList().
+    subscribe({next: r => this.recipes = r, error: e => console.log(e)});
   }
 
   onSelect(recipe:any): void{
@@ -25,7 +24,8 @@ export class RecipeListComponent implements OnInit {
   }
 
   onDelete(recipe:any): void{
-    this.recipes = this.recipes.filter(obj => obj.id != recipe.id);
+    this.recipeService.deleteRecipe(recipe.id).
+    subscribe({next: r => this.ngOnInit(), error: e => console.log(e)});
   }
 
 }
